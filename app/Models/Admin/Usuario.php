@@ -28,7 +28,8 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
         "Email",
         "CriadoEm", 
         "AtualizadoEm",  
-        "Inativo"
+        "Inativo",
+        "IdResidencia"
     ];
 
     protected $hidden = [
