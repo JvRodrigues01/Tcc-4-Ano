@@ -42,19 +42,9 @@ class LoginController extends BaseController
     {
         return $this->service->RecuperarSenha($request);
     }
-
-    public function Logout(Request $request)
-    {
-        return $this->service->Logout($request);
-    }
-
+    
     public function Cadastrar($id = null, Request $request)
     {
         return $this->userService->CreateOrUpdateUsuario($id, $request);
-    }
-
-    public function GetEcommerce(Request $request)
-    {
-        return $this->service->GetEcommerce($request);
     }
 }

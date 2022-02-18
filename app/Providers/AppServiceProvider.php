@@ -14,5 +14,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Repositories\Interfaces\Admin\UsuarioInterface', 'App\Repositories\Admin\UsuarioRepository');
+        $this->app->bind('App\Repositories\Interfaces\Admin\PlacaInterface', 'App\Repositories\Admin\PlacaRepository');
     }
 }

@@ -38,6 +38,6 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
 
     public function usuarioTipo() 
     {
-        return $this->hasMany('App\Models\Admin\UsuarioTipo', 'IdUsuario', 'IdUsuario');
+        return $this->hasOne('App\Models\Admin\UsuarioTipo', 'IdUsuario', 'IdUsuario');
     }
 }

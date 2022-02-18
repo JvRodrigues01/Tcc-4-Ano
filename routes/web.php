@@ -22,4 +22,14 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
         $router->get("/logout", "LoginController@Logout");
         $router->post("/cadastrar/{id}", "LoginController@Cadastrar");
     });  
+
+    
+    $router->group(['prefix' => 'admin', 'namespace' => 'admin'], function ($router) {
+        $router->group(['prefix' => 'placa'], function ($router) {
+            $router->post('/', 'PlacaController@ListPlacas');
+            $router->post('criar[/{id}]', 'PlacaController@CreateOrUpdatePlaca');
+            $router->get('/{id}', 'PlacaController@GetPlaca');
+        });
+    });
+    
 });
