@@ -23,7 +23,6 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
         $router->post("/cadastrar/{id}", "LoginController@Cadastrar");
     });  
 
-    
     $router->group(['prefix' => 'admin', 'namespace' => 'admin'], function ($router) {
         $router->group(['prefix' => 'placa'], function ($router) {
             $router->post('/', 'PlacaController@ListPlacas');
@@ -31,5 +30,4 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
             $router->get('/{id}', 'PlacaController@GetPlaca');
         });
     });
-    
 });

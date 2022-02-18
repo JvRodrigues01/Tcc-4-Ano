@@ -32,7 +32,6 @@ class PlacaService
             $result = $this->interface->ListPlacas($request->Page, $request->Size, $request->Search);
 
             return response()->json($result, Response::HTTP_OK);
-
         }  catch (\Exception $ex) {
             $exception = [
                 'Message' => $ex->getMessage(),
@@ -54,7 +53,6 @@ class PlacaService
             $result = $this->interface->SavePlaca($placa);
 
             return response()->json($result, Response::HTTP_OK);
-
         }  catch (\Exception $ex) {
             $exception = [
                 'Message' => $ex->getMessage(),
@@ -71,7 +69,6 @@ class PlacaService
             $result = $this->interface->GetPlaca($id);
 
             return response()->json($result, Response::HTTP_OK);
-
         }  catch (\Exception $ex) {
             $exception = [
                 'Message' => $ex->getMessage(),
