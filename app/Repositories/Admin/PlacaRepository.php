@@ -17,9 +17,9 @@ class PlacaRepository implements PlacaInterface
 {
     protected $model;
 
-    public function __construct(Placa $usuario)
+    public function __construct(Placa $placa)
     {
-        $this->model = $usuario;
+        $this->model = $placa;
     }
 
     public function ListPlacas($page, $size, $search)

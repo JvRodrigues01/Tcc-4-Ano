@@ -29,5 +29,10 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
             $router->post('criar[/{id}]', 'PlacaController@CreateOrUpdatePlaca');
             $router->get('/{id}', 'PlacaController@GetPlaca');
         });
+        $router->group(['prefix' => 'residencia'], function ($router) {
+            $router->post('/', 'ResidenciaController@ListResidencias');
+            $router->post('criar[/{id}]', 'ResidenciaController@CreateOrUpdateResidencia');
+            $router->get('/{id}', 'ResidenciaController@GetResidencia');
+        });
     });
 });
