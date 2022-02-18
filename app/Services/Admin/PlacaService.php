@@ -47,8 +47,9 @@ class PlacaService
         try {
             $placa = ($id != null) ? $this->interface->GetPlaca($id) : new Placa;
 
-            $placa->Numero = $request->Numero;
-            $placa->IdResidencia = $request->IdResidencia;
+            foreach ($request->all() as $key => $value) {
+                $placa->$key = $value;
+            }
             
             $result = $this->interface->SavePlaca($placa);
 
