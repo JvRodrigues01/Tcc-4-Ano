@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\Admin\UsuarioInterface;
 use App\Models\Admin\Usuario;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
+use App\Models\Admin\Residencia;
 use App\Models\Admin\UsuarioTipo;
 use Illuminate\Support\Facades\DB;
 
@@ -87,21 +88,24 @@ class UsuarioRepository implements UsuarioInterface
      */
     public function RetrieveUsuarios($page, $size, $search)
     {
-        $data = Usuario::select('usuario.*');
+        $data = Usuario::select('usuario.*', 'usuariotipo.Descricao as TipoUsuario');
 
         $data = $data->where(function($q) use ($search) {
             $q->where('Nome', 'LIKE', "%{$search}%")
                 ->orWhere('Email', 'LIKE', "%{$search}%")
-                ->orWhere('CriadoEm', 'LIKE', "%{$search}%")
-                ->orWhere('usuario.IdUsuario', 'LIKE', "%{$search}%")
                 ->orWhere('Login', 'LIKE', "%{$search}%")
-                ->orWhere('UltimoLogin', 'LIKE', "%{$search}%");
+                ->orWhere('usuario.CriadoEm', 'LIKE', "%{$search}%");
         })
-        ->where('Inativo', '=', 'false')
+        ->join('usuariotipo', 'usuariotipo.IdUsuarioTipo', '=', 'usuario.IdTipoUsuario')
         ->orderBy('Login', 'ASC');
         
         $count = $data->count();
         $items = $data->skip(($page - 1) * $size)->take($size)->get();
+        
+        foreach ($items as $item) {
+            $item->Residencia = Residencia::select("residencia.Descricao")->where("IdResidencia", "=", $item->IdResidencia)->first();
+        }
+
         return Pagination::Paginate($items, $count, $page, $size);
     }
 

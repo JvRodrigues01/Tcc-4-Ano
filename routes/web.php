@@ -19,11 +19,12 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
     $router->group(['prefix' => 'auth', 'namespace' => 'auth'], function ($router) {
         $router->post("/login", "LoginController@Login");
         $router->post("/recuperar-senha", "LoginController@RecuperarSenha");
-        $router->post("/cadastrar/{id}", "LoginController@Cadastrar");
     }); 
 
     $router->group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'admin'], function ($router) {
         $router->group(['prefix' => 'usuario'], function ($router) {
+            $router->post('/', 'UsuarioController@ListUsuarios');
+            $router->post('criar[/{id}]', 'UsuarioController@CreateOrUpdateUsuario');
             $router->post('usuariotipo/', 'UsuarioController@ListUsuarioTipo');
         });
         $router->group(['prefix' => 'placa'], function ($router) {

@@ -14,6 +14,14 @@ class UsuarioController extends BaseController
     {
         $this->service = $usuarioService;
     }
+    
+    public function CreateOrUpdateUsuario($id = null, Request $request){
+        return $this->service->CreateOrUpdateUsuario($id, $request);
+    }
+
+    public function ListUsuarios(Request $request){
+        return $this->service->ListUsuarios($request);
+    }
 
     public function ListUsuarioTipo(Request $request){
         return $this->service->ListUsuarioTipo($request);
