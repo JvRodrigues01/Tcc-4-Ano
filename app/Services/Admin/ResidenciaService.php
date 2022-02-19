@@ -46,9 +46,17 @@ class ResidenciaService
     public function CreateOrUpdateResidencia($id = null, Request $request){
         try {
             $residencia = ($id != null) ? $this->interface->GetResidencia($id) : new Residencia;
+            
+            $data = new DateTime();
 
             foreach ($request->all() as $key => $value) {
                 $residencia->$key = $value;
+            }
+
+            if($id != null){
+                $residencia->AtualizadoEm = $data->format("Y-m-d H:i:s");
+            } else {
+                $residencia->CriadoEm = $data->format("Y-m-d H:i:s");
             }
             
             $result = $this->interface->SaveResidencia($residencia);

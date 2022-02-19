@@ -23,4 +23,6 @@ interface UsuarioInterface
     public function SaveToken($token);
 
     public function SearchByEmail($email);
+    
+    public function ListUsuarioTipo($page, $size, $search);
 }

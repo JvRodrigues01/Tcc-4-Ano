@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\Admin\UsuarioInterface;
 use App\Models\Admin\Usuario;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
+use App\Models\Admin\UsuarioTipo;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Ecommerce\Cliente;
@@ -139,5 +140,10 @@ class UsuarioRepository implements UsuarioInterface
     public function SaveToken($token)
     {
         $token->save();
+    }
+
+    public function ListUsuarioTipo($page, $size, $search)
+    {
+        return UsuarioTipo::get();
     }
 }

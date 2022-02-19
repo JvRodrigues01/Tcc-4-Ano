@@ -8,11 +8,11 @@ class Pagination
     public static function Paginate($data, $count, $page, $size)
     {
         $result = [
-            'Registros' => $data,
-            'Contagem' => $count,
-            'Tamanho' => $size,
-            'Pagina' => $page,
-            'TotalPaginas' => intval(ceil($count / $size))
+            'Registers' => $data,
+            'Count' => $count,
+            'Size' => $size,
+            'Page' => $page,
+            'TotalPages' => intval(ceil($count / $size))
         ];
         return $result;
     }    

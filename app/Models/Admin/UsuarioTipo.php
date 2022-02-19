@@ -14,10 +14,10 @@ class UsuarioTipo extends Model implements AuthenticatableContract, Authorizable
 
     protected $table = 'usuariotipo';
 
-    protected $primaryKey = 'IdUsuario';
+    protected $primaryKey = 'IdUsuarioTipo';
 
     protected $fillable = [
-        "IdUsuario",
+        "IdUsuarioTipo",
         "Descricao"
     ];
 

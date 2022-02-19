@@ -138,4 +138,20 @@ class UsuarioService
             return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function ListUsuarioTipo(Request $request){
+        try {
+            $result = $this->interface->ListUsuarioTipo($request->Page, $request->Size, $request->Search);
+
+            return response()->json($result, Response::HTTP_OK);
+        }  catch (\Exception $ex) {
+            $exception = [
+                'Message' => $ex->getMessage(),
+                'Code' => $ex->getCode(),
+                'Exception' => $ex->__toString()
+            ];
+            
+            return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

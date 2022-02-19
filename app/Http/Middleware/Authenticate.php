@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
-use App\Models\Config\Token;
-
+use App\Models\Admin\Token;
 class Authenticate
 {
     /**
@@ -41,19 +40,12 @@ class Authenticate
 
         if($request->header('Authorization') == env('TOKEN'))
             return $next(env('TOKEN'));
-
+                        
         $token = $request->header('Authorization');
-        $date = new DateTime();
-        $validateToken = Token::where('Token', '=', $token)->where('ExpiraEm', '>', $date->format("Y-m-d H:i:s"))->first();
-
+        $validateToken = Token::where('Token', '=', $token)->first();
         if($validateToken == null)
             return response()->json(['error' => 'Unauthorized'], 401);
 
-
-        $RenewToken = $this->autenticacaoService->RenewUserToken($validateToken);
-
-        return $next($RenewToken);
-
-
+        return $next($request);
     }
 }

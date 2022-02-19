@@ -27,7 +27,9 @@ class Residencia extends Model implements AuthenticatableContract, AuthorizableC
         "Bairro",
         "Cidade",
         "Estado",
-        "Cep"
+        "Cep",
+        "CriadoEm",
+        "AtualizadoEm"
     ];
 
     public function residenciaEndereco() 
