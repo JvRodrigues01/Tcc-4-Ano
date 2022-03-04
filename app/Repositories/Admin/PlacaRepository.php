@@ -38,12 +38,12 @@ class PlacaRepository implements PlacaInterface
         return Pagination::Paginate($items, $count, $page, $size);
     }
 
-    public function GetPlaca($placa)
+    public function GetPlaca($id)
     {
         return $this->model->where("IdPlaca", "=", $id)->first();
     }
 
-    public function DeletePlaca($id)
+    public function DeletePlaca($placa)
     {
         $placa->delete();
 
