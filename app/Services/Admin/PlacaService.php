@@ -80,4 +80,23 @@ class PlacaService
             return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function DeletePlaca($id){
+        try {
+
+            $placa = $this->interface->GetPlaca($id);
+            
+            $result = $this->interface->DeletePlaca($placa);
+
+            return response()->json($result, Response::HTTP_OK);
+        }  catch (\Exception $ex) {
+            $exception = [
+                'Message' => $ex->getMessage(),
+                'Code' => $ex->getCode(),
+                'Exception' => $ex->__toString()
+            ];
+            
+            return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

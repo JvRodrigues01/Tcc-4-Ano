@@ -26,4 +26,8 @@ class PlacaController extends BaseController
     public function GetPlaca($id){
         return $this->service->GetPlaca($id);
     }
+    
+    public function DeletePlaca($id){
+        return $this->service->DeletePlaca($id);
+    }
 }

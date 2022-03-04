@@ -55,4 +55,11 @@ class ResidenciaRepository implements ResidenciaInterface
 
         return $residencia;
     }
+
+    public function DeleteResidencia($residencia)
+    {
+        $residencia->delete();
+
+        return $residencia;
+    }
 }

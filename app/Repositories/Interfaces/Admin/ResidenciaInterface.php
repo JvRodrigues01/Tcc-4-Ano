@@ -9,4 +9,6 @@ interface ResidenciaInterface
     public function GetResidencia($id);
 
     public function SaveResidencia($residencia);
+
+    public function DeleteResidencia($residencia);
 }

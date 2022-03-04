@@ -9,4 +9,6 @@ interface PlacaInterface
     public function GetPlaca($id);
 
     public function SavePlaca($placa);
+
+    public function DeletePlaca($placa);
 }

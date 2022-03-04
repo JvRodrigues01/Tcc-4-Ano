@@ -88,4 +88,23 @@ class ResidenciaService
             return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function DeleteResidencia($id){
+        try {
+
+            $residencia = $this->interface->GetResidencia($id);
+            
+            $result = $this->interface->DeleteResidencia($residencia);
+
+            return response()->json($result, Response::HTTP_OK);
+        }  catch (\Exception $ex) {
+            $exception = [
+                'Message' => $ex->getMessage(),
+                'Code' => $ex->getCode(),
+                'Exception' => $ex->__toString()
+            ];
+            
+            return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
