@@ -4,11 +4,10 @@ namespace App\Repositories\Admin;
 
 use App\Repositories\Interfaces\Admin\ResidenciaInterface;
 use App\Models\Admin\Residencia;
+use App\Models\Admin\Cliente;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
 use Illuminate\Support\Facades\DB;
-
-use App\Models\Ecommerce\Cliente;
 
 use DateTime;
 
@@ -46,7 +45,10 @@ class ResidenciaRepository implements ResidenciaInterface
 
     public function GetResidencia($id)
     {
-        return $this->model->where("IdResidencia", "=", $id)->first();
+        $data = $this->model->find($id);
+        $data->Clientes = Cliente::where("IdResidencia", "=", $id)->get();
+
+        return $data;
     }
 
     public function SaveResidencia($residencia)

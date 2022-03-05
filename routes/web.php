@@ -33,11 +33,18 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
             $router->get('/{id}', 'PlacaController@GetPlaca');
             $router->get('/delete/{id}', 'PlacaController@DeletePlaca');
         });
+        
         $router->group(['prefix' => 'residencia'], function ($router) {
             $router->post('/', 'ResidenciaController@ListResidencias');
             $router->post('criar[/{id}]', 'ResidenciaController@CreateOrUpdateResidencia');
             $router->get('/{id}', 'ResidenciaController@GetResidencia');
             $router->get('/delete/{id}', 'ResidenciaController@DeleteResidencia');
+        });
+        $router->group(['prefix' => 'cliente'], function ($router) {
+            $router->post('/', 'ClienteController@ListClientes');
+            $router->post('criar[/{id}]', 'ClienteController@CreateOrUpdateCliente');
+            $router->get('/{id}', 'ClienteController@GetCliente');
+            $router->get('/delete/{id}', 'ClienteController@DeleteCliente');
         });
     });
 });

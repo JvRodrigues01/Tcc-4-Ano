@@ -29,7 +29,7 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
         "CriadoEm", 
         "AtualizadoEm",  
         "Inativo",
-        "IdResidencia"
+        "IdCliente"
     ];
 
     protected $hidden = [
@@ -39,5 +39,10 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
     public function usuarioTipo() 
     {
         return $this->hasOne('App\Models\Admin\UsuarioTipo', 'IdUsuario', 'IdUsuario');
+    }
+
+    public function cliente() 
+    {
+        return $this->hasOne('App\Models\Admin\Cliente', 'IdCliente', 'IdCliente');
     }
 }

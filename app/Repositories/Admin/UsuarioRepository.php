@@ -7,10 +7,9 @@ use App\Models\Admin\Usuario;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
 use App\Models\Admin\Residencia;
+use App\Models\Admin\Cliente;
 use App\Models\Admin\UsuarioTipo;
 use Illuminate\Support\Facades\DB;
-
-use App\Models\Ecommerce\Cliente;
 
 use DateTime;
 
@@ -112,6 +111,8 @@ class UsuarioRepository implements UsuarioInterface
     public function GetUserByLogin($login)
     {
         $user = Usuario::where("Login", "=", $login)->first();
+        $user->Cliente = Cliente::where("IdCliente", $user->IdCliente)->first();
+
         return $user;
     }
 
