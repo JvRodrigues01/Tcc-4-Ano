@@ -50,6 +50,8 @@ class PlacaService
             foreach ($request->all() as $key => $value) {
                 $placa->$key = $value;
             }
+
+            if($id != null) unset($placa->Residencia);
             
             $result = $this->interface->SavePlaca($placa);
 

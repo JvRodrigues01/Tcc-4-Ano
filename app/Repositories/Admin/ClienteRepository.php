@@ -21,7 +21,8 @@ class ClienteRepository implements ClienteInterface
 
     public function ListClientes($page, $size, $search)
     {
-        $data = $this->model;
+        $data = $this->model::select('cliente.*', 'residencia.Descricao as ResidenciaDescricao')
+                            ->join('residencia','residencia.IdResidencia', '=', 'cliente.IdResidencia');
 
         if($search){
             $data = $data->where(function($q) use ($search) {

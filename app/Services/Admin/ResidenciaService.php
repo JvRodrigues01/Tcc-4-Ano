@@ -55,6 +55,7 @@ class ResidenciaService
 
             if($id != null){
                 $residencia->AtualizadoEm = $data->format("Y-m-d H:i:s");
+                unset($residencia->Clientes);
             } else {
                 $residencia->CriadoEm = $data->format("Y-m-d H:i:s");
             }

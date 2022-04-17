@@ -154,4 +154,35 @@ class UsuarioService
             return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function CreateUserByCpfCliente($login, $senha, $nome, $email, $tipoUsuario, $idCliente)
+    {
+        try {
+            $data = new DateTime();
+
+            $usuario = new Usuario;
+            
+            $usuario->IdTipoUsuario = $tipoUsuario;
+            $usuario->Login = $login;
+            $usuario->Senha = Crypt::hash($senha);
+            $usuario->Nome = $nome;
+            $usuario->Email = $email;
+            $usuario->CriadoEm = $data->format("Y-m-d H:i:s");
+            $usuario->Guid = $this->helpers->GerarGuid();
+            $usuario->Inativo = false;
+            $usuario->IdCliente = $idCliente;
+
+            
+            return $this->interface->SaveUsuario($usuario);
+            
+        } catch (\Exception $ex) {
+            $exception = [
+                'Message' => $ex->getMessage(),
+                'Code' => $ex->getCode(),
+                'Exception' => $ex->__toString()
+            ];
+        
+            return response()->json($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

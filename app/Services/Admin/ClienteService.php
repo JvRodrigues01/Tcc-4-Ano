@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Interfaces\Admin\ClienteInterface;
+use App\Repositories\Interfaces\Admin\UsuarioInterface;
+use App\Services\Admin\UsuarioService;
 use App\Models\Admin\Cliente;
 
 use DateTime;
@@ -18,12 +20,14 @@ class ClienteService
 {
     protected $interface;
     protected $helpers;
+    protected $usuarioInterface;
 
     public function __construct(ClienteInterface $clienteInterface,
-        Helpers $helpers)
+        Helpers $helpers, UsuarioService $usuarioInterface)
     {
         $this->helpers = $helpers;
         $this->interface = $clienteInterface;
+        $this->usuarioInterface = $usuarioInterface;
     }
 
     
@@ -52,6 +56,11 @@ class ClienteService
             }
             
             $result = $this->interface->SaveCliente($cliente);
+
+            if($result && $id == null){
+                $usuario = $this->usuarioInterface->CreateUserByCpfCliente($result->Cpf, $result->Cpf, $result->Nome, $result->Email, 2, $result->IdCliente);
+                $result->Usuario = $usuario;
+            }
 
             return response()->json($result, Response::HTTP_OK);
         }  catch (\Exception $ex) {

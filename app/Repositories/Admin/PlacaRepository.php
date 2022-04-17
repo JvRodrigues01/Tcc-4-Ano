@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Repositories\Interfaces\Admin\PlacaInterface;
 use App\Models\Admin\Placa;
+use App\Models\Admin\Residencia;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,8 @@ class PlacaRepository implements PlacaInterface
 
     public function ListPlacas($page, $size, $search)
     {
-        $data = $this->model;
+        $data = $this->model::select('placa.*', 'residencia.Descricao as ResidenciaDescricao')
+                            ->join('residencia','residencia.IdResidencia', '=', 'placa.IdResidencia');
 
         if($search){
             $data = $data->where(function($q) use ($search) {
@@ -40,7 +42,10 @@ class PlacaRepository implements PlacaInterface
 
     public function GetPlaca($id)
     {
-        return $this->model->where("IdPlaca", "=", $id)->first();
+        $data = $this->model->where("IdPlaca", "=", $id)->first();
+        $data->Residencia = Residencia::where("IdResidencia", "=", $data->IdResidencia)->first();
+
+        return $data;
     }
 
     public function DeletePlaca($placa)

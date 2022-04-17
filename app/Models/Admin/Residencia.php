@@ -32,8 +32,8 @@ class Residencia extends Model implements AuthenticatableContract, AuthorizableC
         "AtualizadoEm"
     ];
 
-    public function cliente() 
+    public function Cliente() 
     {
-        return $this->hasMany('App\Models\Admin\Cliente', 'IdResidencia', 'IdResidencia');
+        return $this->hasMany(Cliente::class, 'IdResidencia', 'IdResidencia');
     }
 }
