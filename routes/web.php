@@ -32,6 +32,7 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
             $router->post('criar[/{id}]', 'PlacaController@CreateOrUpdatePlaca');
             $router->get('/{id}', 'PlacaController@GetPlaca');
             $router->get('/delete/{id}', 'PlacaController@DeletePlaca');
+            $router->post('/recognition', 'PlacaController@Recognition');
         });
         
         $router->group(['prefix' => 'residencia'], function ($router) {

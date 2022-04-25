@@ -7,6 +7,9 @@ use App\Models\Admin\Placa;
 use App\Models\Admin\Residencia;
 use App\Models\Admin\Token;
 use App\Functions\Pagination;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Ecommerce\Cliente;
@@ -60,5 +63,22 @@ class PlacaRepository implements PlacaInterface
         $placa->save();
 
         return $placa;
+    }
+
+    public function Recognition($image)
+    {
+        $client = new Client();
+
+		$response = $client->request('POST', "http://127.0.0.1:5000/recognition",
+		[
+			'headers' => [
+				'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode([
+                'image' => $image
+            ])
+		]);
+
+        return json_decode($response->getBody());
     }
 }

@@ -30,4 +30,8 @@ class PlacaController extends BaseController
     public function DeletePlaca($id){
         return $this->service->DeletePlaca($id);
     }
+
+    public function Recognition(Request $request){
+        return $this->service->Recognition($request);
+    }
 }

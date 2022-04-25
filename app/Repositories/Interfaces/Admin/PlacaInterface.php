@@ -11,4 +11,6 @@ interface PlacaInterface
     public function SavePlaca($placa);
 
     public function DeletePlaca($placa);
+
+    public function Recognition($image);
 }
