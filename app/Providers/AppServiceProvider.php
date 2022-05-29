@@ -17,5 +17,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Repositories\Interfaces\Admin\PlacaInterface', 'App\Repositories\Admin\PlacaRepository');
         $this->app->bind('App\Repositories\Interfaces\Admin\ClienteInterface', 'App\Repositories\Admin\ClienteRepository');
         $this->app->bind('App\Repositories\Interfaces\Admin\ResidenciaInterface', 'App\Repositories\Admin\ResidenciaRepository');
+        $this->app->bind('App\Repositories\Interfaces\Admin\LogInterface', 'App\Repositories\Admin\LogRepository');
     }
 }

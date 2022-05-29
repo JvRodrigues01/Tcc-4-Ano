@@ -151,4 +151,12 @@ class UsuarioRepository implements UsuarioInterface
     {
         return UsuarioTipo::get();
     }
+
+    public function GetUserByToken($token)
+    {
+        $token = DB::table("token")
+                    ->where("Token", $token)->first();
+        
+        return $token;
+    }
 }

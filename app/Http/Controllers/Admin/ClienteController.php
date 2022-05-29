@@ -27,7 +27,7 @@ class ClienteController extends BaseController
         return $this->service->GetCliente($id);
     }
     
-    public function DeleteCliente($id){
-        return $this->service->DeleteCliente($id);
+    public function DeleteCliente(Request $request, $id){
+        return $this->service->DeleteCliente($request, $id);
     }
 }

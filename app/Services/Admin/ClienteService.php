@@ -20,13 +20,15 @@ class ClienteService
 {
     protected $interface;
     protected $helpers;
+    protected $usuarioService;
     protected $usuarioInterface;
 
     public function __construct(ClienteInterface $clienteInterface,
-        Helpers $helpers, UsuarioService $usuarioInterface)
+        Helpers $helpers, UsuarioService $usuarioService, UsuarioInterface $usuarioInterface)
     {
         $this->helpers = $helpers;
         $this->interface = $clienteInterface;
+        $this->usuarioService = $usuarioService;
         $this->usuarioInterface = $usuarioInterface;
     }
 
@@ -49,6 +51,8 @@ class ClienteService
 
     public function CreateOrUpdateCliente($id = null, Request $request){
         try {
+            $data = new DateTime();
+
             $cliente = ($id != null) ? $this->interface->GetCliente($id) : new Cliente;
 
             foreach ($request->all() as $key => $value) {
@@ -58,9 +62,15 @@ class ClienteService
             $result = $this->interface->SaveCliente($cliente);
 
             if($result && $id == null){
-                $usuario = $this->usuarioInterface->CreateUserByCpfCliente($result->Cpf, $result->Cpf, $result->Nome, $result->Email, 2, $result->IdCliente);
+                $usuario = $this->usuarioService->CreateUserByCpfCliente($result->Cpf, $result->Cpf, $result->Nome, $result->Email, 2, $result->IdCliente);
                 $result->Usuario = $usuario;
             }
+
+            $token = $request->header('Authorization');
+            
+            $user = $this->usuarioInterface->GetUserByToken($token)->IdUsuario;
+
+            $this->logInterface->SaveLogs("Cliente", $id ? $id : null, $data->format("Y-m-d H:i:s"), $user, "CreateOrUpdateCliente", true);
 
             return response()->json($result, Response::HTTP_OK);
         }  catch (\Exception $ex) {
@@ -90,12 +100,19 @@ class ClienteService
         }
     }
 
-    public function DeleteCliente($id){
+    public function DeleteCliente(Request $request, $id){
         try {
+            $data = new DateTime();
 
             $cliente = $this->interface->GetCliente($id);
             
             $result = $this->interface->DeleteCliente($cliente);
+
+            $token = $request->header('Authorization');
+            
+            $user = $this->usuarioInterface->GetUserByToken($token)->IdUsuario;
+
+            $this->logInterface->SaveLogs("Cliente", $id ? $id : null, $data->format("Y-m-d H:i:s"), $user, "DeleteCliente", true);
 
             return response()->json($result, Response::HTTP_OK);
         }  catch (\Exception $ex) {

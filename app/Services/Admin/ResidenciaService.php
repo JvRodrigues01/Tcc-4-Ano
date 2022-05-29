@@ -13,17 +13,24 @@ use DateTime;
 use App\Functions\Log;
 use App\functions\Crypt;
 use App\Helpers\Helpers;
+use App\Repositories\Interfaces\Admin\LogInterface;
+use App\Repositories\Interfaces\Admin\UsuarioInterface;
 
 class ResidenciaService
 {
     protected $interface;
+    protected $usuarioInterface;
+    protected $logInterface;
     protected $helpers;
 
-    public function __construct(ResidenciaInterface $residenciaInterface,
+    public function __construct(ResidenciaInterface $residenciaInterface, UsuarioInterface $usuarioInterface,
+        LogInterface $logInterface,
         Helpers $helpers)
     {
         $this->helpers = $helpers;
         $this->interface = $residenciaInterface;
+        $this->usuarioInterface = $usuarioInterface;
+        $this->logInterface = $logInterface;
     }
 
     
@@ -62,6 +69,12 @@ class ResidenciaService
             
             $result = $this->interface->SaveResidencia($residencia);
 
+            $token = $request->header('Authorization');
+            
+            $user = $this->usuarioInterface->GetUserByToken($token)->IdUsuario;
+
+            $this->logInterface->SaveLogs("Residencia", $id ? $id : null, $data->format("Y-m-d H:i:s"), $user, "CreateOrUpdateResidencia", true);
+
             return response()->json($result, Response::HTTP_OK);
         }  catch (\Exception $ex) {
             $exception = [
@@ -90,12 +103,19 @@ class ResidenciaService
         }
     }
 
-    public function DeleteResidencia($id){
+    public function DeleteResidencia(Request $request, $id){
         try {
+            $data = new DateTime();
 
             $residencia = $this->interface->GetResidencia($id);
             
             $result = $this->interface->DeleteResidencia($residencia);
+            
+            $token = $request->header('Authorization');
+            
+            $user = $this->usuarioInterface->GetUserByToken($token)->IdUsuario;
+
+            $this->logInterface->SaveLogs("Residencia", $id ? $id : null, $data->format("Y-m-d H:i:s"), $user, "DeleteResidencia", true);
 
             return response()->json($result, Response::HTTP_OK);
         }  catch (\Exception $ex) {

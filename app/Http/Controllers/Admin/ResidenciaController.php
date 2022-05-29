@@ -27,7 +27,7 @@ class ResidenciaController extends BaseController
         return $this->service->GetResidencia($id);
     }
     
-    public function DeleteResidencia($id){
-        return $this->service->DeleteResidencia($id);
+    public function DeleteResidencia(Request $request, $id){
+        return $this->service->DeleteResidencia($request, $id);
     }
 }
