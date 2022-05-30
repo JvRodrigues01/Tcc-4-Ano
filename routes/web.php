@@ -47,5 +47,8 @@ $router->group(['prefix' => env('API_VERSION', 'api/v1')], function ($router){
             $router->get('/{id}', 'ClienteController@GetCliente');
             $router->get('/delete/{id}', 'ClienteController@DeleteCliente');
         });
+        $router->group(['prefix' => 'log'], function ($router) {
+            $router->post('/', 'LogController@ListLogs');
+        });
     });
 });

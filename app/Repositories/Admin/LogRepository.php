@@ -32,4 +32,32 @@ class LogRepository implements LogInterface
 
         $log->save();
     }
+
+    public function ListLogs($page, $size, $search = null, $usuario = null, $dataInicio = null, $dataFim = null)
+    {
+        $data = $this->model::select('log.*');
+
+        if(isset($usuario)){
+            $data = $data->where('IdUsuario', $usuario);
+        }
+
+        if(isset($dataInicio)){
+            $data = $data->where('DataHora', ">=", $dataInicio);
+        }
+
+        if(isset($dataFim)){
+            $data = $data->where('DataHora', "<=", $dataFim);
+        }
+
+        if($search){
+            $data = $data->where(function($q) use ($search) {
+                $q->where('Entidade', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $count = $data->count();
+        $items = $data->skip(($page - 1) * $size)->take($size)->orderBy('DataHora', 'ASC')->get();
+
+        return Pagination::Paginate($items, $count, $page, $size);
+    }
 }
