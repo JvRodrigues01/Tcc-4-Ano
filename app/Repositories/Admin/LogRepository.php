@@ -19,7 +19,7 @@ class LogRepository implements LogInterface
         $this->model = $log;
     }
 
-    public function SaveLogs($entidade = null, $idEntidade = null, $data = null, $user = null, $acao = null, $sucesso = false)
+    public function SaveLogs($entidade = null, $idEntidade = null, $data = null, $user = null, $acao = null, $sucesso = false, $mensagem = null)
     {
         $log = new Log;
 
@@ -29,6 +29,7 @@ class LogRepository implements LogInterface
         $log->IdUsuario = $user;
         $log->Acao = $acao;
         $log->Sucesso = $sucesso;
+        $log->Mensagem = $mensagem;
 
         $log->save();
     }

@@ -111,9 +111,12 @@ class UsuarioRepository implements UsuarioInterface
     public function GetUserByLogin($login)
     {
         $user = Usuario::where("Login", "=", $login)->first();
-        $user->Cliente = Cliente::where("IdCliente", $user->IdCliente)->first();
+        if($user){
+            $user->Cliente = Cliente::where("IdCliente", $user->IdCliente)->first();
+            return $user;
+        }
 
-        return $user;
+        return null;
     }
 
     public function GetUserByEmail($email)

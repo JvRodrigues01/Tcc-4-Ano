@@ -14,17 +14,17 @@ use App\Functions\Log;
 use App\Functions\Crypt;
 use App\Helpers\Helpers;
 use App\Mail\GenericMail;
+use App\Repositories\Interfaces\Admin\LogInterface;
 
 class AutenticacaoService
 {
     protected $interface;
-    protected $ecommerceInterface;
-    protected $ecommerceCliente;
-    protected $clienteInterface;
+    protected $logInterface;
 
-    public function __construct(UsuarioInterface $usuarioInterface)
+    public function __construct(UsuarioInterface $usuarioInterface, LogInterface $logInterface)
     {
         $this->interface = $usuarioInterface;
+        $this->logInterface = $logInterface;
     }
 
 
@@ -69,12 +69,16 @@ class AutenticacaoService
     public function Login(Request $request)
     {
         try {
+            $data = new DateTime();
+
             $defaultMessage = "Usuário ou senha não correspondem.";
 
             if(!$this->validateLogin($request)) {
                 $result = [
                     "Message" => $defaultMessage
                 ];
+
+                $this->logInterface->SaveLogs("Login", null, $data->format("Y-m-d H:i:s"), null, "Authenticacao", false, $defaultMessage);
 
                 return response()->json($result, Response::HTTP_OK);
             }
@@ -88,6 +92,8 @@ class AutenticacaoService
                 $result = [
                     "Message" => $defaultMessage
                 ];
+                
+                $this->logInterface->SaveLogs("Login", null, $data->format("Y-m-d H:i:s"), null, "Authenticacao", false, $defaultMessage);
 
                 return response()->json($result, Response::HTTP_OK);
             }
@@ -96,6 +102,8 @@ class AutenticacaoService
                 $result = [
                     "Message" => "Este usuário se encontra inativado, favor entrar em contato o administrador."
                 ];
+                
+                $this->logInterface->SaveLogs("Login", null, $data->format("Y-m-d H:i:s"), $user->IdUsuario, "Authenticacao", false, "Este usuário se encontra inativado, favor entrar em contato o administrador.");
 
                 return response()->json($result, Response::HTTP_OK);
             }
@@ -104,6 +112,8 @@ class AutenticacaoService
                 $result = [
                     "Message" => $defaultMessage
                 ];
+                
+                $this->logInterface->SaveLogs("Login", null, $data->format("Y-m-d H:i:s"), null, "Authenticacao", false, $defaultMessage);
 
                 return response()->json($result, Response::HTTP_OK);
             }
@@ -114,6 +124,8 @@ class AutenticacaoService
                 "Token" => $token->Token,
                 "Usuario" => $user
             ];
+            
+            $this->logInterface->SaveLogs("Login", null, $data->format("Y-m-d H:i:s"), $user->IdUsuario, "Authenticacao", true, null);
 
             return response()->json($result, Response::HTTP_OK);
         } catch (\Exception $ex) {

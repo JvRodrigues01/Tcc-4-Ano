@@ -13,20 +13,23 @@ use DateTime;
 use App\Functions\Log;
 use App\functions\Crypt;
 use App\Helpers\Helpers;
+use App\Repositories\Interfaces\Admin\LogInterface;
 use App\Repositories\Interfaces\Admin\UsuarioInterface;
 
 class PlacaService
 {
     protected $interface;
     protected $usuarioInterface;
+    protected $logInterface;
     protected $helpers;
 
-    public function __construct(PlacaInterface $placaInterface, UsuarioInterface $usuarioInterface,
+    public function __construct(PlacaInterface $placaInterface, UsuarioInterface $usuarioInterface, LogInterface $logInterface, 
         Helpers $helpers)
     {
         $this->helpers = $helpers;
         $this->interface = $placaInterface;
         $this->usuarioInterface = $usuarioInterface;
+        $this->logInterface = $logInterface;
     }
 
     
